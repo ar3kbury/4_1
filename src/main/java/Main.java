@@ -21,12 +21,15 @@ class Main {
             System.out.print("Podaj imie studenta: ");
             String name = scanner.nextLine().trim();
 
+            System.out.print("Podaj nazwisko studenta: ");
+            String lastName = scanner.nextLine().trim();
+
             System.out.print("Podaj wiek studenta: ");
             String ageInput = scanner.nextLine().trim();
 
             try {
               int age = Integer.parseInt(ageInput);
-              s.addStudent(new Student(name, age));
+              s.addStudent(new Student(name, lastName, age));
               System.out.println("Dodano studenta.");
             } catch (NumberFormatException e) {
               System.out.println("Niepoprawny wiek. Podaj liczbe calkowita.");
