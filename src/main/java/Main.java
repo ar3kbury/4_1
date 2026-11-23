@@ -5,27 +5,55 @@ class Main {
   public static void main(String[] args) {
     try (Scanner scanner = new Scanner(System.in)) {
       Service s = new Service();
+      boolean running = true;
 
-      System.out.print("Podaj imie studenta: ");
-      String name = scanner.nextLine().trim();
+      while (running) {
+        System.out.println("\nWybierz opcje:");
+        System.out.println("1 - Dodaj studenta");
+        System.out.println("2 - Wypisz wszystkich studentow");
+        System.out.println("0 - Wyjscie");
+        System.out.print("Twoj wybor: ");
 
-      System.out.print("Podaj wiek studenta: ");
-      String ageInput = scanner.nextLine().trim();
+        String choice = scanner.nextLine().trim();
 
-      int age;
-      try {
-        age = Integer.parseInt(ageInput);
-      } catch (NumberFormatException e) {
-        System.out.println("Niepoprawny wiek. Podaj liczbe calkowita.");
-        return;
-      }
+        switch (choice) {
+          case "1":
+            System.out.print("Podaj imie studenta: ");
+            String name = scanner.nextLine().trim();
 
-      s.addStudent(new Student(name, age));
+            System.out.print("Podaj wiek studenta: ");
+            String ageInput = scanner.nextLine().trim();
 
-      System.out.println("\nLista studentow w bazie:");
-      var students = s.getStudents();
-      for (Student current : students) {
-        System.out.println(current.ToString());
+            try {
+              int age = Integer.parseInt(ageInput);
+              s.addStudent(new Student(name, age));
+              System.out.println("Dodano studenta.");
+            } catch (NumberFormatException e) {
+              System.out.println("Niepoprawny wiek. Podaj liczbe calkowita.");
+            }
+            break;
+
+          case "2":
+            System.out.println("\nLista studentow w bazie:");
+            var students = s.getStudents();
+            if (students.isEmpty()) {
+              System.out.println("Brak studentow w bazie.");
+            } else {
+              for (Student current : students) {
+                System.out.println(current.ToString());
+              }
+            }
+            break;
+
+          case "0":
+            running = false;
+            System.out.println("Koniec programu.");
+            break;
+
+          default:
+            System.out.println("Nieznana opcja. Wybierz 1, 2 lub 0.");
+            break;
+        }
       }
     } catch (IOException e) {
       System.out.println("Blad wejscia/wyjscia: " + e.getMessage());
